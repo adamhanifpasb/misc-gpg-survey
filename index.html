@@ -100,7 +100,8 @@ textarea:focus{outline:3px solid var(--pale)}
 
 /* Survey 4 (slide 38) */
 .scalehd{display:grid;grid-template-columns:62px minmax(220px,340px) 1fr 86px;gap:10px;align-items:center;margin-bottom:6px}
-.pills{display:grid;grid-template-columns:repeat(5,1fr);text-align:center;align-items:center}
+.pills{position:relative;height:30px;margin:0 4%}
+.pills>span{position:absolute;top:50%;transform:translate(-50%,-50%)}
 .pl{justify-self:center;border-radius:6px;padding:5px 12px;font-size:12.5px;font-weight:700;color:#fff;white-space:nowrap}
 .pl.g{background:var(--navy)}.pl.c{background:var(--teal)}.pl.e{background:var(--pale);color:var(--title)}
 .pn{font-size:13px;font-weight:700;color:var(--grey)}
@@ -110,14 +111,25 @@ textarea:focus{outline:3px solid var(--pale)}
 .nmb{background:var(--card);border-radius:6px;padding:7px 12px}
 .nmb b{display:block;color:var(--title);font-size:14.5px}
 .nmb span{display:block;color:var(--grey);font-size:12.5px;line-height:1.3}
-.trk{position:relative;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;height:44px}
-.trk:before{content:"";position:absolute;left:10%;right:10%;top:50%;height:10px;margin-top:-5px;background:var(--track);border-radius:5px}
+.trk{position:relative;height:44px;margin:0 4%}
+.trk .bar{position:absolute;left:0;right:0;top:50%;height:10px;margin-top:-5px;background:var(--track);border-radius:5px}
+.trk .tick{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;border:2px solid var(--dot)}
+.trk input[type=range]{position:absolute;left:-14px;right:-14px;width:calc(100% + 28px);top:0;height:44px;margin:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer;touch-action:pan-y}
+.trk input[type=range]::-webkit-slider-runnable-track{height:44px;background:transparent}
+.trk input[type=range]::-moz-range-track{height:44px;background:transparent}
+.trk input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:7px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 4px rgba(38,38,213,.2)}
+.trk input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 4px rgba(38,38,213,.2)}
+.trk.unset input[type=range]::-webkit-slider-thumb{opacity:0}
+.trk.unset input[type=range]::-moz-range-thumb{opacity:0}
+.trk.unset .bar{background:repeating-linear-gradient(90deg,var(--track) 0 10px,#DCE3EA 10px 14px)}
+.your{cursor:pointer}
 .stop{position:relative;justify-self:center;width:44px;height:44px;border:0;background:transparent;cursor:pointer;display:grid;place-items:center;padding:0}
 .stop i{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid var(--dot);font-style:normal;font-size:0;color:#fff;font-weight:700;transition:all .12s}
 .stop:hover i{border-color:var(--blue)}
 .stop.sel i{width:30px;height:30px;background:var(--blue);border-color:var(--blue);font-size:14px;box-shadow:0 0 0 4px rgba(38,38,213,.18)}
 .your{border:1.5px solid var(--pale);border-radius:6px;text-align:center;padding:7px 4px;font-size:13px;color:var(--grey);background:#fff}
 .your b{color:var(--blue)}
+.flash{background:#E3F8EF;color:#03603F;border-radius:8px;padding:10px 14px;font-weight:700;font-size:14.5px;margin:0 0 14px}
 .mlab{display:none}
 .bstrip{background:var(--pink);border-radius:8px;padding:12px 16px;margin-top:12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 .bstrip .k{color:var(--red);font-weight:700}
@@ -191,7 +203,7 @@ table.res td.n{text-align:center;white-space:nowrap;font-variant-numeric:tabular
   .scalehd{display:none}
   .dl{grid-template-columns:52px 1fr 66px;gap:8px;padding:10px 0;border-bottom:1px solid var(--card)}
   .dl .trk{grid-column:1/-1;order:3}
-  .dl .mlab{display:grid;grid-template-columns:repeat(5,1fr);grid-column:1/-1;order:4;text-align:center;font-size:11px;color:var(--grey);font-weight:700;margin-top:-4px}
+  .dl .mlab{display:flex;justify-content:space-between;grid-column:1/-1;order:4;font-size:11px;color:var(--grey);font-weight:700;margin-top:-4px}
   .dl .your{order:2}
   .bstrip .right{margin-left:0;width:100%}
   .bstrip .right .btn{flex:1}
@@ -218,8 +230,8 @@ table.res td.n{text-align:center;white-space:nowrap;font-variant-numeric:tabular
         <div class="icard"><div class="ic"><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAEqElEQVR42u2dz4scRRTHP697ZkFN2FxUUIxEPAVzSFzYyC54EZScEhUh6lU86L8i5OIh8ZwcPMRcRNBEIggGjMlF9mgSQUFPauIK86O/HuYVNMMyO7DdPd3N+0IxyzI7+977VNWrqh7qGRVLUm5mU//5LPA+sAE8AwzphsbA78CPwGUzuzbvWyslKffXE5K+UX90Q9KJso9VySoMfmZmhaTXgKvAYaAo/R+jW5I3gAx4CLxtZl8nX1sDoBT848AtD/4EGNAPJV8eAZtmtlMVhKy6AaAcuNTD4OO+TIBDwEVJWWl0rBaAJyYBrwNbwLRnwS9DmALbwBtmpiryQVahgefn5s395ta2tmVsP18l1YP0fjOzqaQBcNJzyiKoRcXQ69AiGzP38aSkgZlNPAZaCYCSHgeeXiKxp7nz7xauigSs79NBks1PAY/5ymh1I2DOsOESveoH4CPg/pJDvimlZfIx4FPg9D4jYa0VI1mS+eu6pL9801LMbWIKbyNJL7V+8T/bRI5Kds/7Ivd1vRyDVY+AZXrYLvCrL+FoUe+fn14euK3rTdjY9HIxbdgOlLhq6vn40rLRqSVbQaLrwhFEbwGEAkAACAWAABAKAAEgFAACQACIEASAABAKAAEgFAACQCgABIBQAAgAoQAQAEIBIACEAkAACAWAABAKAAEgFAACQCgABIBQAAgAoQAQAEIBIACEAkAACAWAABAKAAEgFAACQCgABIBQAAgAoQAQAELtBNCFKhrW9J34TapIF6NKrbtC1Pwa4qKPAMTshvWjZvYzLb6wVdLzbqv6AiD1qiFwSdLHwL2W354+bKrWwaDhXPMKcJv21g840nR+HKyoOsURullBo/u3p9P+C7yzPq+Cql7mqUPL295sxMSsptd8hb5JR67H7zSAwgOeRu4/3tJotq5ByDoW/IxZeZFPmBVUe9Hbtv9ut7Ts7b+WLOJThdJn3pd0aoE9L0t60IAdlRXxyTpUUuRf4JyZ3ZG0JimXZN5ySWtm9hPwFvBfV0qmdAHA1KeVi2Z21wM9MrOpmcnb1MxGkoZmdhv4zP9mGgAO3vtzf/3cD/KmSxz2XfE8kLd9FGQdOR5+BPzi9XsXJdjC33OvlJBjBIS6n4QPAS/49LLI5szfc4wGj5T7DMBKSfgdn17y/Sr1Ae+6b9O2T0NZhb10XJONKZF+KOlUWu3ssQwdmtlY0gbwQSmB16FRVZu9qgDsAn/UtPZOPfgJ4AtJm2Y23mMZOpa0CVxlVuu3jkO65Nufpb3G6gCkuupmNgHuuoFFjU/VjgI3JV2QtC3pSW/bki4AN4HnSmdGdRyHCLjj1bTzgxYltQqOI3Iva34G+NLn3bzGhFy2OVW0PrzgPVVvCnPgjJl9lXxf+dm8n4cY8J0fjE2o71mDPBCDPX6X1xj85NP3wKuAqijJWxWAVCf4OHDLe+SkgQc+TT2QSb48BE6b2U7yuRVJ2IOfmdkOcM4NHficWdS4Hrcag6+S/Sn4b1YZ/Er3AQ4hN7MbwBZw3T8/6+gjQyvZ/y2wZWbX3ceitV/DKycmSWeB94AN4Flm37fpgsbAb8y+QnPZzK7N+1aV/gc/UfNldq+48gAAAABJRU5ErkJggg=="></div><div><b>Keep this page open</b><span>Use this one page for all four surveys. No sign-up or app is needed.</span></div></div>
         <div class="icard"><div class="ic"><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAFhklEQVR42u2dz6ocRRSHv9NzXRjzB10oCvoAWQhXXQgGgwt1EUEiKKgLX0BfQL3JvckjCLpzoxAQiRHMxuAiSzeJCQnGlRoFMaKIYoK50/1z4WlsJvfGme7qW9U9VdD00EzNVNevzldVp05XG54kTcys9M+HgVeBx4AHgDtIM1XAr8Al4BPgAzP7vXkvg0iSJn5+WNIZDTddkfRCfU+SbAiVX/j5aUl/+I2UflQDqPTKyzptXFsbigjmBd0PfAnsBqbACsNMFSBgAmyY2bpbd2VmSrHAhRfw3RFUPkDhxxQ4KmnD+4JkLaEAngMOeusZcuU3rXoClMARF2Hqjc1SFOA1N1sxnmR+b00RkrSEwoeadYEZoQjTlC3BJN1MeJwfZKDneJ0Ax83sSEods0lS4Ju9ZZSVRbg9gkKk0g+bOerrKeFoTdKxVPqErhZQzYg4Ba7757u8xW333WwJHQUoGxX8GfARcB74ya/dDzwCvOhD3dk8MUUofci9bmYbklaAMooILaf/9bT/K0lPzfEfT0q6MJM3tvti0z9veBlXouCoReFLP5+RtLfhc1mRVEgyPwq/Vjv69kr6fOY3YotQN4Zj0XxHLSv/kqTddcuZ4z9W/Lxb0uVERViPIkLLAj8xb+VvIcKBxDytcXHUgvunm2sILdcdTifUH8xawsZOWkKbYeEJL5i1HHUZcCL7jhYToPaxT4HzPlyr2swbPO95/61JQk7AKL6jRS3gOvDzNm6HRVwV14AbA3Bl1zPm3kQYmwc0NI7WGjjqRYRFBdgF3NfB0VbnuRe4c2Cu7F5EKBYoUD19X/VCFC2XQA1Y9d8qE/KYboejaZ84alOJL3tH2qoP8LyvDHB5c62X0VGeiEWeJ7R0RVyWtKeFK2JPYq6IrjPmziIULb5fAfuBk5L2mdn0/5xx/p29wEnPWw1wBLZVtEV3HHV0R1+Y0x19MDF3dDKWEGpB5vQ2CzKrwEvAoYQWZEIv6nSKwAu9JFk2liR3JbgkmdzyZqioiHrhfTLn9TGJUFtCKxGWJSwlWUsoehgpNI9l8h3NhrzMNWPOzrjwbouFRMgC9Oe2mEuELEBkHGUBIuMoCxAZR1mAyDjKAkTGUeiJWE4LTtayBcTB0du1JWQLiOc7Omxmp7IARHmY3IDvgNUsQDwRCuD1LECcVLoAZ01SmYejUfoCA34pgN86xHrm1GGTFOCegn83O2ob7ZxTt/R3AXy8ZAsoqSAI4PsC+BD41gXIVrBzoyCAs/WGTc8Dpxq9c7aGflt/PSF7vPDItU+Bt9xXUeUOeUeGoO+b2bn6ma3CzEpJR4H1bAm9pXpHsovAAeCvon7eyy1hAziSLaHXyr8CHDKzP6knYDMiHM8i9IKduvKfNbMfJRVm9p87uiHCShYheMufeOU/Y2ZXvaFXt6yIuQhlFiE4dr7xlv/D7K6+tk04ebNjXgOO5Y65dfR4jZ2rW22pvKUTLuOoN+yUc4elZBz1h52FopczjsJjZ6G4oIyj8NhZODAr4ygsdlo/QJFxFAY7rUMTM47CYKdTbGjGUXfsBHmGa8lx1Ak7QaKjlxhHnbETLDx9CXEUBDvBHyNdEhwFw07wBzSWAEdBsUOPe5BaY2uatcbmHNWAN+fYbLyj7CFa7pm60yJMRiJCvbPL14Oo/JFZwmaj8h8cTOWPRIRhYWdkOBomdkZiCcPGzsBFGAd2BoqjcWFnYJYwTuwMRIRxYydxHC0HdhK1hOXCTmIiLCd2EsHRcmMnsiVk7EQUIWMnIo4ydiJaQsZOQBE2FxQhY6cnHM3z5o2bGTvhRXhzhuuz76GpZl4OcS5jJ7wIhx0pt0s3JL0naZ/nyVvxBBKiFuFuSW9I+kLSNbeE65IuSnpH0qONPMlX/j9MO4f2fsiISwAAAABJRU5ErkJggg=="></div><div><b>Your entity is recorded</b><span>You choose it once here, so there is no need to write it in your answers.</span></div></div>
         <div class="icard"><div class="ic"><img alt="" src="data:image/png;base64,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"></div><div><b>One idea per answer</b><span>Keep each answer to one point in a sentence or two. Add as many as you like.</span></div></div>
-        <div class="icard"><div class="ic"><img alt="" src="data:image/png;base64,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"></div><div><b>Send, then wait</b><span>Press Send when you finish a survey. Move on only when the facilitator opens the next one.</span></div></div>
-        <div class="icard"><div class="ic b"><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAADJklEQVR42u2cwW7TQBRFz3NMmyBgwXfwPcAvsGYJ6oYt3XbbVUUlfocv6Ka7FgFNSmlzWTBGRqIhIQXPjO+VrKR1JnL8/DzPb44uWJZlDaYo7YAlrTzmiJDD+o9OvKTJGp+b/ClIzoDtAjEDdm7ZfRURC1+ud3/lh6RdSfuSTiSdSTqX9DFt5+l/J+kzu5KakjIh5wBM0uu+1tfb/lhrywlX0kzSqaTrtC1v2br9p+lWRe5Z0K5bXQw1R0kCmAIzYAJoxdzVpH0zYCrpsvcdef2wVK216cQ3EXGTYxKki+Oqe7/BuKv0I5XxrXXZpoO8kXQfuJdhlSbgUbq611UDPJbU9r4jJ32LiHmX4lPgDfAMeJAOODIMxMMNjkvA5wxPfJeRX4BjYC8kHQAvPOUPooOQNE8PNjle+ds8NObckugy4WsoxxJhRGp8ChwAB8ByABwAi8F6QQuXocOVoQ1wyI8mV9MLQo7b3wQs161J5/ywBV4CF8BztyL+ayviHbAXve5c7s24D+l1VTu62/cJeJJec2zG/Vw67bej5xkvzFwDyw2GLIGziLjIfKXvl3Z0ZDrxqlckbDJuJ/W5cswAuvWXNmeeRhIRobSytUhz1KryucuSObBIY7NmhbJ+DkgncJLul0epcpisqC66/UcRcZnGqog14Yy1lNQAr9LfT39TralX+bwHXqcxSwxmGczCaKIzwHBuLQFwgH2Lu9NbnDPAk7zpa9PXpq/HS1/nTkdXS1+XQkdXS1+XQkfXSl8XR0fXsuRpOhrT0cZeTEfjFTHLAXAALAfAAcB0dDl0dJVlaEl0dE30dXF0dI2tiCLo6Frp67LoaCqkr0uho6ulr4ugo8dAX4/6OSAH+rrFGpS+NtdiMMtoojUgnBumi53C2D3dk5jpYst0seliRroitg0dXa23cyne0dV6O5fiHV2rtzOleUfXYqhk72hMR9tUz97RmIyzHAAHwHIAHACLcuhol6ED09E1eTsX5x3tVsRAdHSt3s4U5R1do7dzKd7R1Xo7U4J39Bi8nbN+DhiDt3MJ3tFVezsbzLKMJpaWAYZzLcuyytB30DZ3wabTEGsAAAAASUVORK5CYII="></div><div><b>Move the dials (Survey 4)</b><span>Rate each sub-topic from 1 (Group Rule) to 5 (Entity-Owned) for the future, then press Send once.</span></div></div>
+        <div class="icard"><div class="ic"><img alt="" src="data:image/png;base64,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"></div><div><b>Send, then wait</b><span>Press Send when you finish a survey and the next one opens. Wait for the facilitator before you answer it.</span></div></div>
+        <div class="icard"><div class="ic b"><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAADJklEQVR42u2cwW7TQBRFz3NMmyBgwXfwPcAvsGYJ6oYt3XbbVUUlfocv6Ka7FgFNSmlzWTBGRqIhIQXPjO+VrKR1JnL8/DzPb44uWJZlDaYo7YAlrTzmiJDD+o9OvKTJGp+b/ClIzoDtAjEDdm7ZfRURC1+ud3/lh6RdSfuSTiSdSTqX9DFt5+l/J+kzu5KakjIh5wBM0uu+1tfb/lhrywlX0kzSqaTrtC1v2br9p+lWRe5Z0K5bXQw1R0kCmAIzYAJoxdzVpH0zYCrpsvcdef2wVK216cQ3EXGTYxKki+Oqe7/BuKv0I5XxrXXZpoO8kXQfuJdhlSbgUbq611UDPJbU9r4jJ32LiHmX4lPgDfAMeJAOODIMxMMNjkvA5wxPfJeRX4BjYC8kHQAvPOUPooOQNE8PNjle+ds8NObckugy4WsoxxJhRGp8ChwAB8ByABwAi8F6QQuXocOVoQ1wyI8mV9MLQo7b3wQs161J5/ywBV4CF8BztyL+ayviHbAXve5c7s24D+l1VTu62/cJeJJec2zG/Vw67bej5xkvzFwDyw2GLIGziLjIfKXvl3Z0ZDrxqlckbDJuJ/W5cswAuvWXNmeeRhIRobSytUhz1KryucuSObBIY7NmhbJ+DkgncJLul0epcpisqC66/UcRcZnGqog14Yy1lNQAr9LfT39TralX+bwHXqcxSwxmGczCaKIzwHBuLQFwgH2Lu9NbnDPAk7zpa9PXpq/HS1/nTkdXS1+XQkdXS1+XQkfXSl8XR0fXsuRpOhrT0cZeTEfjFTHLAXAALAfAAcB0dDl0dJVlaEl0dE30dXF0dI2tiCLo6Frp67LoaCqkr0uho6ulr4ugo8dAX4/6OSAH+rrFGpS+NtdiMMtoojUgnBumi53C2D3dk5jpYst0seliRroitg0dXa23cyne0dV6O5fiHV2rtzOleUfXYqhk72hMR9tUz97RmIyzHAAHwHIAHACLcuhol6ED09E1eTsX5x3tVsRAdHSt3s4U5R1do7dzKd7R1Xo7U4J39Bi8nbN+DhiDt3MJ3tFVezsbzLKMJpaWAYZzLcuyytB30DZ3wabTEGsAAAAASUVORK5CYII="></div><div><b>Move the sliders (Survey 4)</b><span>Slide each sub-topic from 1 (Group Rule) to 100 (Entity-Owned) for the future, then press Send once.</span></div></div>
         <div class="icard"><div class="ic b"><img alt="" src="data:image/png;base64,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"></div><div><b>Be candid</b><span>Your name is not collected; answers appear on screen with your entity tag only.</span></div></div>
       </div>
     </div>
@@ -288,8 +300,8 @@ const SURVEYS={
     q:"What is missing from the current GPG, and what does your entity do instead?",sub:"Answer in two parts: what is missing, then your workaround",
     think:[["Silent areas","Topics the GPG does not address at all"],["Unclear rules","Clauses that each entity reads differently"],["Your workaround","Your own manual, a form, a committee or an informal practice"]],
     ex:"Missing: a Group blacklist  |  We do: our own CT2 blacklist check"},
- 4:{k:"SURVEY 4 · Rating 1-5 · 8 min",short:"Where should each sub-topic sit in future?",
-    title:"Survey 4: where should each sub-topic sit in future? Move each dial between Group Rule, Centre-Led and Entity-Owned"}
+ 4:{k:"SURVEY 4 · Rating 1-100 · 8 min",short:"Where should each sub-topic sit in future?",
+    title:"Survey 4: where should each sub-topic sit in future? Move each slider between Group Rule (1), Centre-Led (50) and Entity-Owned (100)"}
 };
 
 /* ---------- helpers ---------- */
@@ -304,11 +316,11 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const hhmm=d=>d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
 
 /* ---------- participant state ---------- */
-let S=store.get("gpgSurvey.v2")||{};
+let S=store.get("gpgSurvey.v3")||{};
 if(!S.id)S.id=rid();
 S.entity=S.entity||"";S.s1=S.s1||[];S.s2=S.s2||[];S.s3=S.s3||[];S.r=S.r||{};S.sent=S.sent||{};
-const save=()=>store.set("gpgSurvey.v2",S); save();
-let view="start",cur=1,busy=false;
+const save=()=>store.set("gpgSurvey.v3",S); save();
+let view="start",cur=1,busy=false,flash=null;
 
 /* ---------- network ---------- */
 async function post(body){
@@ -342,7 +354,7 @@ function show(v){
   window.scrollTo({top:0});
 }
 function route(){
-  if(location.hash==="#results"){show("results");startResults();return}
+  if(location.hash.startsWith("#results")){const m=location.hash.match(/results-s([1-4])/);if(m)rtab=m[1];show("results");startResults();return}
   if(view==="results"){ if(S.entity){show("survey");renderSurvey()} else {show("start");renderStart()} }
 }
 window.addEventListener("hashchange",route);
@@ -379,6 +391,8 @@ function renderSurvey(){
         el("div",{},el("p",{class:"lbl"},"Think about"),d.think.map(t=>el("div",{class:"tcard"},el("b",{},t[0]),el("span",{},t[1])))),
         el("div",{},el("p",{class:"lbl"},"How to write your answer"),el("div",{class:"ex"},el("div",{class:"k"},"Example"),el("i",{},d.ex)),
           el("div",{class:"tip"},"One idea per answer. Add as many as you like, then press Send.")))];
+    if(flash&&flash.n===cur-1)v.append(el("div",{class:"flash"},`\u2713 Survey ${flash.n} received at ${flash.at}. This is Survey ${cur}: wait for the facilitator before you answer it.`));
+    flash=null;
     const wrap=el("div",{class:"sv"},left[0],left[1],composer(cur));
     v.append(wrap);
   } else v.append(dials());
@@ -406,26 +420,29 @@ function composer(n){
   p.append(el("div",{class:"sendrow"},el("button",{class:"btn blue",type:"button",id:"sendBtn",onclick:()=>trySend(n)},`Send Survey ${n}`),st));
   return p;
 }
+const P100=v=>((v-1)/99*100)+"%";
 function dials(){
   const box=el("div",{});
   box.append(el("div",{class:"scalehd"},el("div",{}),el("div",{class:"lbl",style:"margin:0"},"Sub-topic"),
-    el("div",{class:"pills"},el("span",{class:"pl g"},"1  Group Rule"),el("span",{class:"pn"},"2"),el("span",{class:"pl c"},"3  Centre-Led"),el("span",{class:"pn"},"4"),el("span",{class:"pl e"},"5  Entity-Owned")),el("div",{})));
+    el("div",{class:"pills"},el("span",{class:"pl g",style:`left:${P100(1)}`},"1  Group Rule"),el("span",{class:"pn",style:`left:${P100(25)}`},"25"),el("span",{class:"pl c",style:`left:${P100(50)}`},"50  Centre-Led"),el("span",{class:"pn",style:`left:${P100(75)}`},"75"),el("span",{class:"pl e",style:`left:${P100(100)}`},"100  Entity-Owned")),el("div",{})));
+  if(flash&&flash.n===3)box.prepend(el("div",{class:"flash"},`\u2713 Survey 3 received at ${flash.at}. Survey 4 is below: wait for the facilitator before you answer it.`));
   SUBTOPICS.forEach(([c,name,q],idx)=>{
     const grp=idx<4?"":idx<8?" g2":" g3";
-    const your=el("div",{class:"your"},"Your: ",el("b",{},S.r[c]?String(S.r[c]):"__"));
-    const tr=el("div",{class:"trk",role:"radiogroup","aria-label":`${c} ${name}`});
-    [1,2,3,4,5].forEach(v=>tr.append(el("button",{type:"button",class:"stop"+(S.r[c]===v?" sel":""),role:"radio","aria-checked":S.r[c]===v?"true":"false","aria-label":`${v} ${v===1?"Group Rule":v===3?"Centre-Led":v===5?"Entity-Owned":"in between"}`,
-      onclick:()=>{S.r[c]=(S.r[c]===v?0:v);S.sent[4]=false;save();
-        tr.querySelectorAll(".stop").forEach((b,i)=>{const on=S.r[c]===i+1;b.classList.toggle("sel",on);b.setAttribute("aria-checked",on?"true":"false")});
-        your.querySelector("b").textContent=S.r[c]?String(S.r[c]):"__"; $("#cnt").textContent=`${SUBTOPICS.filter(([k])=>S.r[k]).length} of 13 rated`; $("#st4").textContent="";$("#st4").className="st4";}},
-      el("i",{},String(v)))));
+    const your=el("div",{class:"your",title:"Tap to clear"},"Your: ",el("b",{},S.r[c]?String(S.r[c]):"__"));
+    const inp=el("input",{type:"range",min:"1",max:"100",step:"1",value:String(S.r[c]||50),"aria-label":`${c} ${name}: 1 Group Rule, 50 Centre-Led, 100 Entity-Owned`});
+    const tr=el("div",{class:"trk"+(S.r[c]?"":" unset")},el("div",{class:"bar"}),[1,25,50,75,100].map(v=>el("div",{class:"tick",style:`left:${P100(v)}`})),inp);
+    const commit=()=>{S.r[c]=Number(inp.value);S.sent[4]=false;save();tr.classList.remove("unset");your.querySelector("b").textContent=String(S.r[c]);
+      $("#cnt").textContent=`${SUBTOPICS.filter(([k])=>S.r[k]).length} of 13 rated`;const s=$("#st4");if(s){s.textContent="";s.className="st4"}};
+    inp.addEventListener("input",commit); inp.addEventListener("change",commit); inp.addEventListener("pointerup",commit);
+    your.addEventListener("click",()=>{if(!S.r[c])return;S.r[c]=0;S.sent[4]=false;save();inp.value="50";tr.classList.add("unset");your.querySelector("b").textContent="__";$("#cnt").textContent=`${SUBTOPICS.filter(([k])=>S.r[k]).length} of 13 rated`});
     box.append(el("div",{class:"dl"},el("div",{class:"code"+grp},c),el("div",{class:"nmb"},el("b",{},name),el("span",{},q)),tr,your,
-      el("div",{class:"mlab"},el("span",{},"Group Rule"),el("span",{}),el("span",{},"Centre-Led"),el("span",{}),el("span",{},"Entity-Owned"))));
+      el("div",{class:"mlab"},el("span",{},"1 Group Rule"),el("span",{},"50 Centre-Led"),el("span",{},"100 Entity-Owned"))));
   });
   const rated=SUBTOPICS.filter(([c])=>S.r[c]).length;
-  box.append(el("div",{class:"bstrip"},el("span",{},el("span",{class:"k"},"On your phone  "),"rate each sub-topic 1 to 5 for the future, one entity view per person, then press Send once. Choose 2 or 4 for 'in between'."),
+  box.append(el("div",{class:"bstrip"},el("span",{},el("span",{class:"k"},"On your phone  "),"slide each sub-topic from 1 to 100 for the future, one entity view per person, then press Send once. Tap Your to clear a slider."),
     el("div",{class:"right"},el("span",{class:"cnt",id:"cnt"},`${rated} of 13 rated`),el("button",{class:"btn blue",type:"button",id:"sendBtn",onclick:()=>trySend(4)},"Send my ratings"))));
-  box.append(el("div",{class:"st4"+(S.sent[4]?" ok":""),id:"st4",style:"margin-top:8px"},S.sent[4]?`✓ Received ${S.sentAt&&S.sentAt[4]?"at "+S.sentAt[4]:""}. Send again after any change.`:""));
+  box.append(el("div",{class:"st4"+(S.sent[4]?" ok":""),id:"st4",style:"margin-top:8px"},S.sent[4]?`\u2713 Received ${S.sentAt&&S.sentAt[4]?"at "+S.sentAt[4]:""}. Send again after any change.`:""));
+  flash=null;
   return box;
 }
 
@@ -436,7 +453,7 @@ function trySend(n){
   if(n<4){const a=clean($("#f1")&&$("#f1").value),b=clean($("#f2")&&$("#f2").value); if(a||b)$("#addBtn").click();
     if(!S["s"+n].length){dialog("Nothing to send yet",[el("p",{},"Add at least one answer, then press Send.")],[["Close",null]]);return}}
   else{const left=SUBTOPICS.filter(([c])=>!S.r[c]).map(([c])=>c);
-    if(left.length===13){dialog("No dials set",[el("p",{},"Rate at least one sub-topic before sending.")],[["Close",null]]);return}
+    if(left.length===13){dialog("No sliders set",[el("p",{},"Rate at least one sub-topic before sending.")],[["Close",null]]);return}
     if(left.length){dialog(`${left.length} sub-topic${left.length>1?"s are":" is"} not rated`,[el("p",{},`Not rated: ${left.join(", ")}. Unrated sub-topics are left out of the results. You may send now and send again later.`)],[["Go back",null],["Send anyway",()=>doSend(n)]]);return}}
   doSend(n);
 }
@@ -444,7 +461,7 @@ async function doSend(n){
   const rec=record(); busy=true; const btn=$("#sendBtn"); if(btn){btn.disabled=true;btn.textContent="Sending…"}
   setStatus(n,"Sending, please keep this page open…",false);
   try{ await submitRec(rec); S.sent[n]=true; S.sentAt=S.sentAt||{}; S.sentAt[n]=hhmm(new Date()); save(); busy=false;
-    if(n===4){show("done");strip("#strip9")} else renderSurvey(); }
+    if(n===4){show("done");strip("#strip9")} else {flash={n,at:S.sentAt[n]};cur=n+1;renderSurvey();window.scrollTo({top:0})} }
   catch(e){ busy=false; if(btn){btn.disabled=false;btn.textContent=n<4?`Send Survey ${n}`:"Send my ratings"} setStatus(n,"Not sent yet.",false); showCode(n,rec); }
 }
 function showCode(n,rec){
@@ -474,15 +491,16 @@ function stats(){
   const rows=[...RES.values()].filter(r=>!entFilter||r.e===entFilter);
   const sub=SUBTOPICS.map(([c,name],i)=>{
     const vals=rows.map(r=>r.r[i]).filter(v=>v>=1),n=vals.length,mean=n?vals.reduce((a,b)=>a+b,0)/n:null;
-    const sd=n?Math.sqrt(vals.reduce((a,v)=>a+(v-mean)**2,0)/n):null,dist=[1,2,3,4,5].map(k=>vals.filter(v=>v===k).length);
+    const sd=n?Math.sqrt(vals.reduce((a,v)=>a+(v-mean)**2,0)/n):null,dist=[[1,20],[21,40],[41,60],[61,80],[81,100]].map(([lo,hi])=>vals.filter(v=>v>=lo&&v<=hi).length);
     const em={};ENTITIES.forEach(e=>{const v=rows.filter(r=>r.e===e).map(r=>r.r[i]).filter(v=>v>=1);if(v.length)em[e]=v.reduce((a,b)=>a+b,0)/v.length});
     const emv=Object.values(em),range=emv.length>1?Math.max(...emv)-Math.min(...emv):0;
-    const t=Number(TODAY[c]),today=t>=1&&t<=5?t:null;
-    return{c,name,i,n,mean,sd,dist,em,range,today,gap:(mean!=null&&today!=null)?mean-today:null,split:(sd!=null&&n>=3&&(sd>=1||range>=2))};
+    const t=Number(TODAY[c]),today=t>=1&&t<=100?t:null;
+    return{c,name,i,n,mean,sd,dist,em,range,today,gap:(mean!=null&&today!=null)?mean-today:null,split:(sd!=null&&n>=3&&(sd>=25||range>=50))};
   });
   return{rows,sub};
 }
-const f1=x=>x==null?"–":x.toFixed(1);
+const f1=x=>x==null?"–":x.toFixed(0);
+const band=m=>m==null?"–":m<=33?"Group Rule":m<=67?"Centre-Led":"Entity-Owned";
 function drawResults(){
   const v=$("#v-results");v.replaceChildren();
   v.append(el("h1",{class:"t"},"Plenary 1 results: the largest gaps between Today and the future rating set the first topics for Day 2"));
@@ -500,7 +518,7 @@ function drawResults(){
   const fc=el("div",{class:"fchips"});
   [["","All entities"],...ENTITIES.map(e=>[e,`${e} (${all.filter(r=>r.e===e).length})`])].forEach(([k,l])=>fc.append(el("button",{type:"button",class:"fchip"+(entFilter===k?" on":""),onclick:()=>{entFilter=k;drawResults()}},l)));
   const tabs=el("div",{class:"tabs"});
-  [["1","Survey 1: GPG should cover"],["2","Survey 2: what works"],["3","Survey 3: missing and workaround"],["4","Survey 4: dials"],["io","Codes and export"]].forEach(([k,l])=>tabs.append(el("button",{type:"button",class:"tab"+(rtab===k?" on":""),onclick:()=>{rtab=k;drawResults()}},l)));
+  [["1","Survey 1: GPG should cover"],["2","Survey 2: what works"],["3","Survey 3: missing and workaround"],["4","Survey 4: sliders"],["io","Codes and export"]].forEach(([k,l])=>tabs.append(el("button",{type:"button",class:"tab"+(rtab===k?" on":""),onclick:()=>{rtab=k;drawResults()}},l)));
   v.append(tabs,fc,el("div",{class:"legend"},el("span",{},lastAt?`Updated ${hhmm(lastAt)}`:"Loading…"),el("button",{class:"btn ol",type:"button",style:"padding:5px 10px;font-size:13px",onclick:fetchResults},"Refresh now"),
     el("button",{class:"btn ol",type:"button",style:"padding:5px 10px;font-size:13px",onclick:()=>{KEY="";store.set("gpgKey","");drawResults()}},"Change key")));
   if(rtab==="4")v.append(dialResults(sub)); else if(rtab==="io")v.append(io()); else v.append(textResults(rows,+rtab));
@@ -516,10 +534,10 @@ function textResults(rows,n){
   items.forEach(([e,x])=>c.append(el("div",{class:"rc"},el("span",{class:"etag",style:"background:var(--navy);color:#fff"},e),n===3?[el("span",{},el("span",{class:"k"},"Missing "),x[0]||"(not stated)"),el("span",{class:"w"},el("span",{class:"k"},"Instead "),x[1]||"(not stated)")]:x)));
   box.append(c);return box;
 }
-const pos=v=>(10+(v-1)/4*80)+"%";
+const pos=v=>(4+(v-1)/99*92)+"%";
 function dialResults(sub){
   const box=el("div",{});
-  box.append(el("div",{class:"legend"},el("span",{},el("b",{},"Scale: "),"1 Group Rule, 3 Centre-Led, 5 Entity-Owned"),
+  box.append(el("div",{class:"legend"},el("span",{},el("b",{},"Scale: "),"1 Group Rule, 50 Centre-Led, 100 Entity-Owned"),
     el("span",{},el("i",{style:"width:18px;height:18px;background:var(--red)"}),"Today, from the stocktake"),
     el("span",{},el("i",{style:"width:16px;height:16px;background:var(--blue)"}),"Average future rating"),
     el("span",{},el("i",{style:"width:9px;height:9px;background:var(--grey)"}),"Entity averages (hover for entity)"),
@@ -528,25 +546,25 @@ function dialResults(sub){
   let list=[...sub];if(sortGap)list.sort((a,b)=>(b.gap==null?-1:Math.abs(b.gap))-(a.gap==null?-1:Math.abs(a.gap)));
   const tb=el("tbody",{});
   list.forEach(s=>{
-    const tr=el("div",{class:"rt"},el("div",{class:"ln",style:"left:10%;right:10%"}));
-    [1,2,3,4,5].forEach(k=>tr.append(el("div",{class:"tk",style:`left:${pos(k)}`})));
-    Object.entries(s.em).forEach(([e,m])=>tr.append(el("div",{class:"mk ent",style:`left:${pos(m)}`,title:`${e}: ${m.toFixed(1)}`})));
-    if(s.today!=null)tr.append(el("div",{class:"mk td",style:`left:${pos(s.today)}`,title:`Today ${s.today.toFixed(1)}`},"T"));
-    if(s.mean!=null)tr.append(el("div",{class:"mk avg",style:`left:${pos(s.mean)}`,title:`Future average ${s.mean.toFixed(1)}`}));
+    const tr=el("div",{class:"rt"},el("div",{class:"ln",style:"left:4%;right:4%"}));
+    [1,25,50,75,100].forEach(k=>tr.append(el("div",{class:"tk",style:`left:${pos(k)}`})));
+    Object.entries(s.em).forEach(([e,m])=>tr.append(el("div",{class:"mk ent",style:`left:${pos(m)}`,title:`${e}: ${m.toFixed(0)}`})));
+    if(s.today!=null)tr.append(el("div",{class:"mk td",style:`left:${pos(s.today)}`,title:`Today ${s.today.toFixed(0)}`},"T"));
+    if(s.mean!=null)tr.append(el("div",{class:"mk avg",style:`left:${pos(s.mean)}`,title:`Future average ${s.mean.toFixed(0)}`}));
     const mx=Math.max(1,...s.dist);
-    const tcell=editToday?el("input",{class:"tin",type:"number",min:"1",max:"5",step:"0.1","data-c":s.c,value:s.today==null?"":String(s.today)}):f1(s.today);
+    const tcell=editToday?el("input",{class:"tin",type:"number",min:"1",max:"100",step:"1","data-c":s.c,value:s.today==null?"":String(s.today)}):f1(s.today);
     tb.append(el("tr",{},el("td",{},el("div",{class:"code"+(s.i<4?"":s.i<8?" g2":" g3"),style:"width:48px"},s.c)),el("td",{style:"min-width:200px"},el("div",{class:"nmb",style:"padding:6px 10px"},el("b",{},s.name))),
-      el("td",{},tr),el("td",{class:"n"},tcell),el("td",{class:"n"},el("b",{},f1(s.mean))),
-      el("td",{class:"n"},s.gap==null?"–":el("span",{class:"gp"},(s.gap>0?"+":"")+s.gap.toFixed(1)+(Math.abs(s.gap)<0.05?"":s.gap>0?" to entity":" to Group"))),
-      el("td",{class:"n"},el("span",{class:"dist",title:"Votes for 1 to 5: "+s.dist.join(", ")},s.dist.map(k=>el("span",{style:`height:${Math.max(2,k/mx*24)}px`})))),
+      el("td",{},tr),el("td",{class:"n"},tcell),el("td",{class:"n"},el("b",{},f1(s.mean))),el("td",{class:"n"},el("span",{style:"font-size:12.5px;color:var(--title);font-weight:700"},band(s.mean))),
+      el("td",{class:"n"},s.gap==null?"–":el("span",{class:"gp"},(Math.abs(s.gap)<0.5?"0":(s.gap>0?"+":"")+s.gap.toFixed(0)+(s.gap>0?" to entity":" to Group")))),
+      el("td",{class:"n"},el("span",{class:"dist",title:"Votes in 1-20, 21-40, 41-60, 61-80, 81-100: "+s.dist.join(", ")},s.dist.map(k=>el("span",{style:`height:${Math.max(2,k/mx*24)}px`})))),
       el("td",{class:"n"},f1(s.sd)),el("td",{class:"n"},String(s.n)),el("td",{class:"n"},s.split?el("span",{class:"spl"},"Entities split"):"")));
   });
-  box.append(el("div",{class:"scrollx"},el("table",{class:"res"},el("thead",{},el("tr",{},["","Sub-topic","Position (1 to 5)","Today","Future","Gap","Votes 1–5","SD","n",""].map(h=>el("th",{},h)))),tb)));
-  box.append(el("p",{style:"color:var(--grey);font-size:13px;margin-top:8px"},"Gap is the average future rating minus Today: positive means a move towards Entity-Owned, negative towards Group Rule. 'Entities split' marks a standard deviation of 1.0 or more, or entity averages two or more points apart, with at least three votes."));
+  box.append(el("div",{class:"scrollx"},el("table",{class:"res"},el("thead",{},el("tr",{},["","Sub-topic","Position (1 to 100)","Today","Future","Leans to","Gap","Spread of votes","SD","n",""].map(h=>el("th",{},h)))),tb)));
+  box.append(el("p",{style:"color:var(--grey);font-size:13px;margin-top:8px"},"Gap is the average future rating minus Today: positive means a move towards Entity-Owned, negative towards Group Rule. 'Leans to' bands the average: 1-33 Group Rule, 34-67 Centre-Led, 68-100 Entity-Owned. 'Entities split' marks a standard deviation of 25 or more, or entity averages 50 or more points apart, with at least three votes. Today is the slide 38 stocktake position converted from 1-5 to 1-100."));
   return box;
 }
 async function saveToday(){
-  const t={};document.querySelectorAll(".tin").forEach(i=>{const v=Number(i.value);if(v>=1&&v<=5)t[i.dataset.c]=v});
+  const t={};document.querySelectorAll(".tin").forEach(i=>{const v=Number(i.value);if(v>=1&&v<=100)t[i.dataset.c]=v});
   try{const j=await post({action:"setToday",key:KEY,today:t});if(j&&j.ok)TODAY=j.today||t;else errNote="Today values were not saved."}catch(e){errNote="Today values were not saved."}
 }
 function io(){
@@ -573,7 +591,7 @@ function toTSV(){
 
 /* ---------- boot ---------- */
 renderStart();
-if(location.hash==="#results"){show("results");startResults()}
+if(location.hash.startsWith("#results")){const m=location.hash.match(/results-s([1-4])/);if(m)rtab=m[1];show("results");startResults()}
 else if(S.entity&&Object.values(S.sent).some(Boolean)){cur=[1,2,3,4].find(n=>!S.sent[n])||4;renderSurvey()}
 else show("start");
 </script>
